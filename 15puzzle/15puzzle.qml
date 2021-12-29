@@ -345,7 +345,6 @@ ColumnLayout {
                     height: parent.height-10
                     anchors.centerIn: parent
                     color: {
-    //                     model.text ? "lightsteelblue" : "transparent"
                         if (model.text) {
                             if (model.text == `${index+1}`) {
                                 return "#66bb6a"
