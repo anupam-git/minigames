@@ -1,5 +1,5 @@
 # 15 Puzzle
-A simple implemetation of 15 Puzzle Game
+A simple implemetation of 15 Puzzle Game with pure QML
 
 ## How to Run
 `qmlscene --fullscreen 15puzzle.qml`
