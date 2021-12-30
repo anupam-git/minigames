@@ -10,8 +10,25 @@ Item {
 
     width: 360
     height: 600
+    focus: true
+    onFocusChanged: {
+        focus = true
+    }
 
     Component.onCompleted: startupTimer.start()
+    
+    Keys.onDigit1Pressed: { game.fillSelectedCell(1) }
+    Keys.onDigit2Pressed: { game.fillSelectedCell(2) }
+    Keys.onDigit3Pressed: { game.fillSelectedCell(3) }
+    Keys.onDigit4Pressed: { game.fillSelectedCell(4) }
+    Keys.onDigit5Pressed: { game.fillSelectedCell(5) }
+    Keys.onDigit6Pressed: { game.fillSelectedCell(6) }
+    Keys.onDigit7Pressed: { game.fillSelectedCell(7) }
+    Keys.onDigit8Pressed: { game.fillSelectedCell(8) }
+    Keys.onDigit9Pressed: { game.fillSelectedCell(9) }
+    Keys.onDigit0Pressed: { game.fillSelectedCell("") }
+    Keys.onBackPressed: { game.fillSelectedCell("") }
+    Keys.onDeletePressed: { game.fillSelectedCell("") }
     
     Timer {
         id: startupTimer
@@ -32,19 +49,19 @@ Item {
     SoundEffect {
         id: tapSoundEffect
         source: Qt.resolvedUrl("./tap.wav")
-        volume: 0.3
+        volume: 0.5
     }
     
     SoundEffect {
         id: eraseSoundEffect
         source: Qt.resolvedUrl("./erase.wav")
-        volume: 0.3
+        volume: 0.5
     }
     
     SoundEffect {
         id: completeSoundEffect
         source: Qt.resolvedUrl("./complete.wav")
-        volume: 0.3
+        volume: 0.5
     }
 
     QtObject {
@@ -99,14 +116,26 @@ Item {
         }
 
         function fillSelectedCell(val) {
-            game.board[game.selectedCell.subgridIndex][game.selectedCell.cellIndex].text = val
+            if (game.selectedCell &&
+                game.selectedCell.subgridIndex != -1 &&
+                game.selectedCell.cellIndex != -1 &&
+                game.board[game.selectedCell.subgridIndex][game.selectedCell.cellIndex].isEditable
+            ) {
+                game.board[game.selectedCell.subgridIndex][game.selectedCell.cellIndex].text = val
+                
+                if (val == "") {
+                    eraseSoundEffect.play()
+                } else {
+                    tapSoundEffect.play()
+                }
 
-            mainGrid.model = []
-            mainGrid.model = game.board
+                mainGrid.model = []
+                mainGrid.model = game.board
 
-            if (game.isComplete()) {
-                completedDialog.open()
-                completeSoundEffect.play()
+                if (game.isComplete()) {
+                    completedDialog.open()
+                    completeSoundEffect.play()
+                }
             }
         }
 
@@ -375,7 +404,7 @@ Item {
                                 height: subgrid.cellHeight
                                 color: modelData.isEditable ? "transparent" : "#fff5f5f5"
                                 border.width: isSelected ? 2 : 1
-                                border.color: isSelected ? "#ff2196f3" : "#22000000"
+                                border.color: isSelected ? modelData.isEditable ? "#ff2196f3" : "#66000000" : "#22000000"
 
                                 Label {
                                     anchors.centerIn: parent
@@ -386,7 +415,7 @@ Item {
                                 MouseArea {
                                     anchors.fill: parent
                                     onClicked: {
-                                        if (isSelected || !modelData.isEditable) {
+                                        if (isSelected) {
                                             game.selectedCell = {
                                                 subgridIndex: -1,
                                                 cellIndex: -1
@@ -422,12 +451,11 @@ Item {
                     delegate: RoundButton {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        enabled: game.selectedCell && game.selectedCell.subgridIndex != -1 && game.selectedCell.cellIndex != -1
+                        enabled: game.selectedCell && game.selectedCell.subgridIndex != -1 && game.selectedCell.cellIndex != -1 && game.board[game.selectedCell.subgridIndex][game.selectedCell.cellIndex].isEditable
                         radius: 4
                         text: index+1
                         onClicked: {
                             game.fillSelectedCell(index+1)
-                            tapSoundEffect.play()
                         }
                     }
                 }
@@ -435,12 +463,11 @@ Item {
                 RoundButton {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    enabled: game.selectedCell && game.selectedCell.subgridIndex != -1 && game.selectedCell.cellIndex != -1
+                    enabled: game.selectedCell && game.selectedCell.subgridIndex != -1 && game.selectedCell.cellIndex != -1 && game.board[game.selectedCell.subgridIndex][game.selectedCell.cellIndex].isEditable
                     radius: 4
                     icon.name: "draw-eraser"
                     onClicked: {
                         game.fillSelectedCell("")
-                        eraseSoundEffect.play()
                     }
                 }
             }
