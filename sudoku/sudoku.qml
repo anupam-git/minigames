@@ -30,6 +30,70 @@ Item {
     Keys.onBackPressed: { game.fillSelectedCell("") }
     Keys.onDeletePressed: { game.fillSelectedCell("") }
     
+    Keys.onLeftPressed: {
+        performBeforeKeypressAction()
+        
+        if (game.selectedCell && game.selectedCell.cellIndex%3 > 0) {
+            game.selectedCell.cellIndex--
+        } else if (game.selectedCell && game.selectedCell.subgridIndex%3 > 0) {
+            game.selectedCell.cellIndex += 2
+            game.selectedCell.subgridIndex--
+        }
+        
+        performAfterKeypressAction()
+    }
+    Keys.onRightPressed: {
+        performBeforeKeypressAction()
+        
+        if (game.selectedCell && game.selectedCell.cellIndex%3 < 2) {
+            game.selectedCell.cellIndex++
+        } else if (game.selectedCell && game.selectedCell.subgridIndex%3 < 2) {
+            game.selectedCell.cellIndex -= 2
+            game.selectedCell.subgridIndex++
+        }
+        
+        performAfterKeypressAction()
+    }
+    Keys.onUpPressed: {
+        performBeforeKeypressAction()
+        
+        if (game.selectedCell && game.selectedCell.cellIndex > 2) {
+            game.selectedCell.cellIndex -= 3
+        } else if (game.selectedCell && game.selectedCell.subgridIndex > 2) {
+            game.selectedCell.cellIndex += 6
+            game.selectedCell.subgridIndex -= 3
+        }
+        
+        performAfterKeypressAction()
+    }
+    Keys.onDownPressed: {
+        performBeforeKeypressAction()
+        
+        if (game.selectedCell && game.selectedCell.cellIndex < 6) {
+            game.selectedCell.cellIndex += 3
+        } else if (game.selectedCell && game.selectedCell.subgridIndex < 6) {
+            game.selectedCell.cellIndex -= 6
+            game.selectedCell.subgridIndex += 3
+        }
+        
+        performAfterKeypressAction()
+    }
+    
+    function performBeforeKeypressAction() {
+        if (!game.selectedCell || game.selectedCell.subgridIndex ==-1 || game.selectedCell.cellIndex ==-1) {
+            game.selectedCell = {
+                subgridIndex: 0,
+                cellIndex: 0
+            }
+        }
+    }
+    
+    function performAfterKeypressAction() {
+        tapSoundEffect.play()
+        mainGrid.model = []
+        mainGrid.model = game.board
+    }
+    
     Timer {
         id: startupTimer
         interval: 1
@@ -67,10 +131,10 @@ Item {
     QtObject {
         id: game
 
-        property var selectedCell: ({
-            subgridIndex: -1,
-            cellIndex: -1
-        })
+        property var selectedCell: {
+            'subgridIndex': -1,
+            'cellIndex': -1
+        }
         property real startTime: 0
         property int elapsedMinutes: 0
         property var board: ([
