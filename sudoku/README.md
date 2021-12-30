@@ -1,6 +1,9 @@
 # Sudoku
 A simple implemetation of Sudoku
 
+## Screenshot
+![Screenshot](./screenshot.png)
+
 ## How to Run
 `qmlscene --fullscreen sudoku.qml`
 
