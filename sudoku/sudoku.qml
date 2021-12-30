@@ -104,7 +104,7 @@ Item {
             mainGrid.model = []
             mainGrid.model = game.board
 
-            if (!game.isComplete()) {
+            if (game.isComplete()) {
                 completedDialog.open()
                 completeSoundEffect.play()
             }
