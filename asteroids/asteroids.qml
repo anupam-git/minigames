@@ -27,11 +27,22 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtMultimedia 5.15
 
+import "asteroids.mjs" as Asteroids
+
 Item {
     id: root
 
     width: 600
     height: 600
+
+    focus: true
+
+    Keys.onPressed: {
+        Asteroids.handleKeyPressed(event)
+    }
+    Keys.onReleased: {
+        Asteroids.handleKeyReleased(event)
+    }
     
     QtObject {
         id: game

@@ -31,6 +31,7 @@ import "asteroids.mjs" as Asteroids
 Canvas {
     id: canvas
     anchors.fill: parent
+
     onPaint: {
         var ctx = getContext("2d");
 
