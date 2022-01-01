@@ -97,3 +97,12 @@ export function loop(ctx, game) {
         bullets[i].draw(ctx)
     }
 }
+
+export function reset() {
+    ship = null
+
+    for (var i in bullets) {
+        delete bullets[i]
+    }
+    bullets = []
+}

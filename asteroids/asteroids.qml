@@ -51,6 +51,8 @@ Item {
         property int fps: 0
 
         function reset() {
+            Asteroids.reset()
+            
             game.score = 0
             game.fps = 0
 
