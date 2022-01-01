@@ -22,8 +22,26 @@
  * SOFTWARE.
  */
 
-export function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+import { CanvasObject } from "./CanvasObject.mjs"
+
+export class Rectangle extends CanvasObject {
+    constructor(pos, width, height, angle) {
+        super(pos, width, height, angle)
+    }
+
+    getPoints() {
+        var p0 = this.pos.fromDelta(0, 0).rotate(this.center, this.angle)
+        var p1 = this.pos.fromDelta(this.width, 0).rotate(this.center, this.angle)
+        var p2 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle)
+        var p3 = this.pos.fromDelta(0, this.height).rotate(this.center, this.angle)
+        var p4 = this.pos.fromDelta(0, 0).rotate(this.center, this.angle)
+
+        return [
+            p0.toArray(),
+            p1.toArray(),
+            p2.toArray(),
+            p3.toArray(),
+            p4.toArray()
+        ]
+    }
 }

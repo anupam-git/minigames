@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-import { CanvasObject } from "./CanvasObject.mjs"
+import { Rectangle } from "./Rectangle.mjs"
 import { getRandomIntInclusive } from "./Util.mjs"
 
-export class Asteroid extends CanvasObject {
+export class Asteroid extends Rectangle {
     constructor(pos, speed, angle) {
         super(pos, 50, 50, angle)
 

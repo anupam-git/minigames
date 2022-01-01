@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-import { CanvasObject } from "./CanvasObject.mjs"
+import { Rectangle } from "./Rectangle.mjs"
 
-export class Bullet extends CanvasObject {
+export class Bullet extends Rectangle {
     constructor(pos, angle) {
         super(pos, 2, 2, angle)
 
@@ -34,6 +34,8 @@ export class Bullet extends CanvasObject {
 
     draw(ctx) {
         super.draw(ctx)
+
+        console.log(">>>", this.getPoints())
         
         this.pos.x += Math.cos(this.angle * Math.PI/180) * this.dPos
         this.pos.y += Math.sin(this.angle * Math.PI/180) * this.dPos

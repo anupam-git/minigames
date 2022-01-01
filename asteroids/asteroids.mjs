@@ -75,7 +75,7 @@ export function generateAsteroid(x, y, speed, angle) {
     asteroids.push(new Asteroid(new Point2D(x, y), speed, angle))
 }
 
-export function loop(ctx, game) {
+export function loop(ctx, game, greinerHormann) {
     /**
      * Initialization
      */

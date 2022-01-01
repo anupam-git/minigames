@@ -24,8 +24,8 @@
 
 export class Point2D {
     constructor(x, y) {
-        this.x = x
-        this.y = y
+        this.x = parseInt(x)
+        this.y = parseInt(y)
     }
 
     rotate(pivot, angle) {
@@ -42,8 +42,8 @@ export class Point2D {
         var ynew = this.x * s + this.y * c;
 
         // translate point back:
-        this.x = xnew + pivot.x;
-        this.y = ynew + pivot.y;
+        this.x = parseInt(xnew + pivot.x);
+        this.y = parseInt(ynew + pivot.y);
 
         return this
     }
@@ -54,5 +54,9 @@ export class Point2D {
 
     copy() {
         return new Point2D(this.x, this.y)
+    }
+
+    toArray() {
+        return [this.x, this.y]
     }
 }

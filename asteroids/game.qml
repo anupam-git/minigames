@@ -28,6 +28,7 @@ import QtQuick.Layouts 1.15
 
 import "asteroids.mjs" as Asteroids
 import "Util.mjs" as Util
+import "greiner-hormann.min.js" as GH
 
 Canvas {
     id: canvas
@@ -41,7 +42,7 @@ Canvas {
             ctx.fillStyle = Qt.rgba(0, 0, 0, 1);
             ctx.fillRect(0, 0, width, height);
 
-            Asteroids.loop(ctx, game)
+            Asteroids.loop(ctx, game, greinerHormann)
 
             requestAnimationFrame(draw);
         }

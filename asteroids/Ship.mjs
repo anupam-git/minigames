@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-import { CanvasObject } from "CanvasObject.mjs"
+import { Triangle } from "./Triangle.mjs"
 
-export class Ship extends CanvasObject {
+export class Ship extends Triangle {
     constructor(pos, angle) {
         if (pos == null || angle == null) {
             throw "Parameters cannot be undefined"
