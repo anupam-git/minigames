@@ -31,6 +31,7 @@ export class Bullet extends CanvasObject {
         this.pos = pos
         this.angle = angle
         this.dPos = 4
+        this.isOutOfView = false
     }
 
     draw(ctx) {
@@ -51,5 +52,7 @@ export class Bullet extends CanvasObject {
         ctx.lineTo(p2.x, p2.y)
         ctx.lineTo(p3.x, p3.y)
         ctx.fill()
+
+        this.isOutOfView = !(this.pos.x >= 0 && this.pos.x <= ctx.canvas.width && this.pos.y >= 0 && this.pos.y <= ctx.canvas.height)
     }
 }

@@ -92,17 +92,28 @@ export function loop(ctx, game) {
     fps += 1
     /**************/
 
+    /**
+     * Draw all objects
+     */
     ship.draw(ctx)
     for (var i in bullets) {
         bullets[i].draw(ctx)
     }
+    /**************/
+
+    /**
+     * Delete stray and out of view objects
+     */
+    for (var i in bullets) {
+        if (bullets[i].isOutOfView) {
+            console.log(`Bullet [${i}] is out of view. Deleting`)
+            bullets.splice(i, 1)
+        }
+    }
+    /**************/
 }
 
 export function reset() {
     ship = null
-
-    for (var i in bullets) {
-        delete bullets[i]
-    }
     bullets = []
 }
