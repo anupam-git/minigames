@@ -2,29 +2,36 @@ import { CanvasObject } from "CanvasObject.mjs"
 import { Point2D } from "./Point2D.mjs"
 
 export class Ship extends CanvasObject {
-    constructor(x, y, angle) {
-        if (x == null || y == null || angle == null) {
+    constructor(pos, angle) {
+        if (pos == null || angle == null) {
             throw "Parameters cannot be undefined"
         }
 
-        super(x, y, 20, 30, angle)
+        super(pos, 20, 30, angle)
 
-        this.maxDx = 4
-        this.maxDy = 4
-        this.dx = 0
-        this.dy = 0
+        this.maxDAngle = 4
+        this.maxDPos = 4
+        this.dAngle = 0
+        this.dPos = 0
     }
 
     draw(ctx) {
         super.draw(ctx)
 
-        this.angle += this.dx
-        this.y += this.dy
+        this.angle += this.dAngle
+        this.pos.x += Math.cos(this.angle * Math.PI/180) * this.dPos
+        this.pos.y += Math.sin(this.angle * Math.PI/180) * this.dPos
 
-        var p0 = new Point2D(this.x+this.width/2, this.y).rotate(this.center.x, this.center.y, this.angle)
-        var p1 = new Point2D(this.x+this.width, this.y+this.height).rotate(this.center.x, this.center.y, this.angle)
-        var p2 = new Point2D(this.x+this.width/2, this.y+this.height-5).rotate(this.center.x, this.center.y, this.angle)
-        var p3 = new Point2D(this.x, this.y+this.height).rotate(this.center.x, this.center.y, this.angle)
+        if (this.angle < 0) {
+            this.angle = 360 + this.angle
+        } else if (this.angle >= 360) {
+            this.angle -= 360
+        }
+
+        var p0 = this.pos.fromDelta(this.width/2, 0).rotate(this.center, this.angle-90)
+        var p1 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle-90)
+        var p2 = this.pos.fromDelta(this.width/2, this.height-5).rotate(this.center, this.angle-90)
+        var p3 = this.pos.fromDelta(0, this.height).rotate(this.center, this.angle-90)
         
         ctx.beginPath()
         ctx.fillStyle = 'white';
@@ -48,30 +55,30 @@ export class Ship extends CanvasObject {
     }
 
     startMoveUp() {
-        this.dy = -this.maxDy
+        this.dPos = -this.maxDPos
     }
     startMoveDown() {
-        this.dy = this.maxDy
+        this.dPos = this.maxDPos
     }
 
     startRotateLeft() {
-        this.dx = -this.maxDx
+        this.dAngle = -this.maxDAngle
     }
     startRotateRight() {
-        this.dx = this.maxDx
+        this.dAngle = this.maxDAngle
     }
 
     stopMoveUp() {
-        this.dy = 0
+        this.dPos = 0
     }
     stopMoveDown() {
-        this.dy = 0
+        this.dPos = 0
     }
 
     stopRotateLeft() {
-        this.dx = 0
+        this.dAngle = 0
     }
     stopRotateRight() {
-        this.dx = 0
+        this.dAngle = 0
     }
 }

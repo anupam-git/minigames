@@ -23,6 +23,7 @@
  */
 
 import { Ship } from "Ship.mjs"
+import { Point2D } from "./Point2D.mjs"
 
 var fps = 0
 var fpsStartTime = new Date().getTime()
@@ -68,9 +69,9 @@ export function loop(ctx, game) {
      * Initialization
      */
     if (!ship) {
-        ship = new Ship(ctx.canvas.width/2, ctx.canvas.height/2, 0)
-        ship.x -= ship.width/2
-        ship.y -= ship.height/2
+        ship = new Ship(new Point2D(ctx.canvas.width/2, ctx.canvas.height/2), 90)
+        ship.pos.x -= ship.width/2
+        ship.pos.y -= ship.height/2
     }
     /**************/
 
