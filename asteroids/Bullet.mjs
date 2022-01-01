@@ -34,23 +34,18 @@ export class Bullet extends Rectangle {
 
     draw(ctx) {
         super.draw(ctx)
-
-        console.log(">>>", this.getPoints())
         
         this.pos.x += Math.cos(this.angle * Math.PI/180) * this.dPos
         this.pos.y += Math.sin(this.angle * Math.PI/180) * this.dPos
 
-        var p0 = this.pos.fromDelta(0, 0).rotate(this.center, this.angle)
-        var p1 = this.pos.fromDelta(this.width, 0).rotate(this.center, this.angle)
-        var p2 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle)
-        var p3 = this.pos.fromDelta(-this.width, this.height).rotate(this.center, this.angle)
+        var points = this.getPoints()
         
-        ctx.fillStyle = 'white';
         ctx.beginPath()
-        ctx.moveTo(p0.x, p0.y)
-        ctx.lineTo(p1.x, p1.y)
-        ctx.lineTo(p2.x, p2.y)
-        ctx.lineTo(p3.x, p3.y)
+        ctx.fillStyle = 'white';
+        ctx.moveTo(points[0][0], points[0][1])
+        for (var i in points) {
+            ctx.lineTo(points[i][0], points[i][1])
+        }
         ctx.fill()
 
         this.isOutOfView = !(this.pos.x >= 0 && this.pos.x <= ctx.canvas.width && this.pos.y >= 0 && this.pos.y <= ctx.canvas.height)

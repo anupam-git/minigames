@@ -24,6 +24,7 @@
 
 import { Rectangle } from "./Rectangle.mjs"
 import { getRandomIntInclusive } from "./Util.mjs"
+import { Point2D } from "./Point2D.mjs"
 
 export class Asteroid extends Rectangle {
     constructor(pos, speed, angle) {
@@ -42,17 +43,19 @@ export class Asteroid extends Rectangle {
         this.pos.y += Math.sin(this.angle * Math.PI/180) * this.speed
         this.spriteAngle += this.spriteRotationSpeed
 
-        var p0 = this.pos.fromDelta(0, 0).rotate(this.center, this.spriteAngle)
-        var p1 = this.pos.fromDelta(this.width, 0).rotate(this.center, this.spriteAngle)
-        var p2 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.spriteAngle)
-        var p3 = this.pos.fromDelta(0, this.height).rotate(this.center, this.spriteAngle)
-        
-        ctx.fillStyle = 'red';
+        var points = this.getPoints()
+
         ctx.beginPath()
-        ctx.moveTo(p0.x, p0.y)
-        ctx.lineTo(p1.x, p1.y)
-        ctx.lineTo(p2.x, p2.y)
-        ctx.lineTo(p3.x, p3.y)
+        ctx.fillStyle = 'red';
+        
+        for (var i in points) {
+            points[i] = new Point2D(points[i][0], points[i][1]).rotate(this.center, this.spriteAngle)
+
+            if (i==0) {
+                ctx.moveTo(points[i].x, points[i].y)
+            }
+            ctx.lineTo(points[i].x, points[i].y)
+        }
         ctx.fill()
 
         this.isOutOfView = !(
@@ -60,6 +63,7 @@ export class Asteroid extends Rectangle {
             this.pos.x <= ctx.canvas.width+this.width+200 &&
             
             this.pos.y >= -this.height-200 &&
-            this.pos.y <= ctx.canvas.height+this.height+200)
+            this.pos.y <= ctx.canvas.height+this.height+200
+        )
     }
 }
