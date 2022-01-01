@@ -30,10 +30,13 @@ export class CanvasObject {
         this.width = width
         this.height = height
         this.angle = angle
+        this._center = new Point2D(this.pos.x + this.width/2, this.pos.y + this.height/2)
     }
 
     get center() {
-        return new Point2D(this.pos.x + this.width/2, this.pos.y + this.height/2)
+        this._center.x = this.pos.x + this.width/2
+        this._center.y = this.pos.y + this.height/2
+        return this._center
     }
 
     /**
