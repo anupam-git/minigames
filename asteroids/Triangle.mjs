@@ -30,5 +30,16 @@ export class Triangle extends CanvasObject {
     }
 
     getPoints() {
+        var p0 = this.pos.fromDelta(this.width/2, 0).rotate(this.center, this.angle)
+        var p1 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle)
+        var p2 = this.pos.fromDelta(0, this.height).rotate(this.center, this.angle)
+        var p3 = this.pos.fromDelta(this.width/2, 0).rotate(this.center, this.angle)
+
+        return [
+            p0.toArray(),
+            p1.toArray(),
+            p2.toArray(),
+            p3.toArray(),
+        ]
     }
 }
