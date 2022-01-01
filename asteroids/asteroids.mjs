@@ -35,7 +35,7 @@ var ship = null
 var bullets = []
 var asteroids = []
 
-export function handleKeyPressed(event) {
+export function handleKeyPressed(event, game) {
     switch (event.key) {
         case Qt.Key_Left:
             ship.startRotateLeft()
@@ -51,11 +51,12 @@ export function handleKeyPressed(event) {
             break;
         case Qt.Key_Space:
             bullets.push(new Bullet(new Point2D(ship.center.x, ship.pos.y).rotate(ship.center, ship.angle), ship.angle-90))
+            game.playBulletSound()
             break;
     }
 }
 
-export function handleKeyReleased(event) {
+export function handleKeyReleased(event, game) {
     switch (event.key) {
         case Qt.Key_Left:
             ship.stopRotateLeft()
@@ -116,7 +117,7 @@ export function loop(ctx, game, greinerHormann) {
      */
     for (var i in asteroids) {
         if (CollisionDetector.isColliding(greinerHormann, ship, asteroids[i])) {
-            game.pause = true
+            game.gameOver()
             console.log("Asteroid Collided with ship. Game Over !!!")
         }
     }
@@ -126,6 +127,7 @@ export function loop(ctx, game, greinerHormann) {
             if (CollisionDetector.isColliding(greinerHormann, bullets[i], asteroids[j])) {
                 bullets.splice(i, 1)
                 asteroids.splice(j, 1)
+                game.playExplosionSound()
                 game.score += 10
             }
         }

@@ -23,5 +23,9 @@
  */
 
 export function isColliding(greinerHormann, obj1, obj2) {
-    return greinerHormann.intersection(obj1.getPoints(), obj2.getPoints()) != null
+    try {
+        return greinerHormann.intersection(obj1.getPoints(), obj2.getPoints()) != null
+    } catch(e) {
+        return false
+    }
 }

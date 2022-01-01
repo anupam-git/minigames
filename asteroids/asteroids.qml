@@ -38,10 +38,10 @@ Item {
     focus: true
 
     Keys.onPressed: {
-        Asteroids.handleKeyPressed(event)
+        Asteroids.handleKeyPressed(event, game)
     }
     Keys.onReleased: {
-        Asteroids.handleKeyReleased(event)
+        Asteroids.handleKeyReleased(event, game)
     }
     
     QtObject {
@@ -50,6 +50,11 @@ Item {
         property int score: 0
         property int fps: 0
         property bool pause: false
+
+        function gameOver() {
+            game.pause = true
+            completedDialog.open()
+        }
 
         function reset() {
             Asteroids.reset()
@@ -60,6 +65,26 @@ Item {
 
             contentLoader.source = Qt.resolvedUrl("./menu.qml")
         }
+
+        function playBulletSound() {
+            bulletSound.play()
+        }
+
+        function playExplosionSound() {
+            explosionSound.play()
+        }
+    }
+
+    SoundEffect {
+        id: bulletSound
+        source: Qt.resolvedUrl("./bullet.wav")
+        volume: 0.5
+    }
+
+    SoundEffect {
+        id: explosionSound
+        source: Qt.resolvedUrl("./explosion.wav")
+        volume: 0.5
     }
     
     Dialog {
