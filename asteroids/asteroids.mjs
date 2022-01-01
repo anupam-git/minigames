@@ -23,6 +23,7 @@
  */
 
 import { Ship } from "Ship.mjs"
+import { Asteroid } from "./Asteroid.mjs"
 import { Bullet } from "./Bullet.mjs"
 import { Point2D } from "./Point2D.mjs"
 
@@ -31,6 +32,7 @@ var fpsStartTime = new Date().getTime()
 
 var ship = null
 var bullets = []
+var asteroids = []
 
 export function handleKeyPressed(event) {
     switch (event.key) {
@@ -69,6 +71,10 @@ export function handleKeyReleased(event) {
     }
 }
 
+export function generateAsteroid(x, y, speed, angle) {
+    asteroids.push(new Asteroid(new Point2D(x, y), speed, angle))
+}
+
 export function loop(ctx, game) {
     /**
      * Initialization
@@ -99,6 +105,9 @@ export function loop(ctx, game) {
     for (var i in bullets) {
         bullets[i].draw(ctx)
     }
+    for (var i in asteroids) {
+        asteroids[i].draw(ctx)
+    }
     /**************/
 
     /**
@@ -109,10 +118,16 @@ export function loop(ctx, game) {
             bullets.splice(i, 1)
         }
     }
+    for (var i in asteroids) {
+        if (asteroids[i].isOutOfView) {
+            asteroids.splice(i, 1)
+        }
+    }
     /**************/
 }
 
 export function reset() {
     ship = null
     bullets = []
+    asteroids = []
 }

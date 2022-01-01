@@ -23,27 +23,31 @@
  */
 
 import { CanvasObject } from "./CanvasObject.mjs"
+import { getRandomIntInclusive } from "./Util.mjs"
 
-export class Bullet extends CanvasObject {
-    constructor(pos, angle) {
-        super(pos, 2, 2, angle)
+export class Asteroid extends CanvasObject {
+    constructor(pos, speed, angle) {
+        super(pos, 50, 50, angle)
 
-        this.dPos = 20
+        this.speed = speed
         this.isOutOfView = false
+        this.spriteAngle = 0
+        this.spriteRotationSpeed = 1+(1/getRandomIntInclusive(1, 10))
     }
 
     draw(ctx) {
         super.draw(ctx)
         
-        this.pos.x += Math.cos(this.angle * Math.PI/180) * this.dPos
-        this.pos.y += Math.sin(this.angle * Math.PI/180) * this.dPos
+        this.pos.x += Math.cos(this.angle * Math.PI/180) * this.speed
+        this.pos.y += Math.sin(this.angle * Math.PI/180) * this.speed
+        this.spriteAngle += this.spriteRotationSpeed
 
-        var p0 = this.pos.fromDelta(0, 0).rotate(this.center, this.angle)
-        var p1 = this.pos.fromDelta(this.width, 0).rotate(this.center, this.angle)
-        var p2 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle)
-        var p3 = this.pos.fromDelta(-this.width, this.height).rotate(this.center, this.angle)
+        var p0 = this.pos.fromDelta(0, 0).rotate(this.center, this.spriteAngle)
+        var p1 = this.pos.fromDelta(this.width, 0).rotate(this.center, this.spriteAngle)
+        var p2 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.spriteAngle)
+        var p3 = this.pos.fromDelta(0, this.height).rotate(this.center, this.spriteAngle)
         
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'red';
         ctx.beginPath()
         ctx.moveTo(p0.x, p0.y)
         ctx.lineTo(p1.x, p1.y)
@@ -51,6 +55,11 @@ export class Bullet extends CanvasObject {
         ctx.lineTo(p3.x, p3.y)
         ctx.fill()
 
-        this.isOutOfView = !(this.pos.x >= 0 && this.pos.x <= ctx.canvas.width && this.pos.y >= 0 && this.pos.y <= ctx.canvas.height)
+        this.isOutOfView = !(
+            this.pos.x >= -this.width-200 &&
+            this.pos.x <= ctx.canvas.width+this.width+200 &&
+            
+            this.pos.y >= -this.height-200 &&
+            this.pos.y <= ctx.canvas.height+this.height+200)
     }
 }
