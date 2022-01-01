@@ -63,18 +63,6 @@ export class Ship extends Triangle {
         ctx.lineTo(p2.x, p2.y)
         ctx.lineTo(p3.x, p3.y)
         ctx.fill()
-
-        // Debug points
-        /*
-        ctx.fillStyle = "red"
-        ctx.fillRect(p0.x-3, p0.y-3, 6, 6)
-        ctx.fillRect(p1.x-3, p1.y-3, 6, 6)
-        ctx.fillRect(p2.x-3, p2.y-3, 6, 6)
-        ctx.fillRect(p3.x-3, p3.y-3, 6, 6)
-        ctx.fillStyle = "blue"
-        ctx.fillRect(this.center.x-3, this.center.y-3, 6, 6)
-        */
-        //////
     }
 
     startMoveUp() {
