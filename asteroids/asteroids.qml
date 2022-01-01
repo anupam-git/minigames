@@ -49,12 +49,14 @@ Item {
 
         property int score: 0
         property int fps: 0
+        property bool pause: false
 
         function reset() {
             Asteroids.reset()
             
             game.score = 0
             game.fps = 0
+            game.pause = false
 
             contentLoader.source = Qt.resolvedUrl("./menu.qml")
         }

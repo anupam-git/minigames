@@ -44,7 +44,9 @@ Canvas {
 
             Asteroids.loop(ctx, game, greinerHormann)
 
-            requestAnimationFrame(draw);
+            if (!game.pause) {
+                requestAnimationFrame(draw);
+            }
         }
 
         draw();

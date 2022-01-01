@@ -22,6 +22,6 @@
  * SOFTWARE.
  */
 
-export function isColliding(obj1, obj2) {
-    
+export function isColliding(greinerHormann, obj1, obj2) {
+    return greinerHormann.intersection(obj1.getPoints(), obj2.getPoints()) != null
 }

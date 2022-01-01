@@ -59,4 +59,8 @@ export class Point2D {
     toArray() {
         return [this.x, this.y]
     }
+
+    toJson() {
+        return { x: this.x, y: this.y }
+    }
 }

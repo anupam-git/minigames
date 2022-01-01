@@ -36,10 +36,10 @@ export class Triangle extends CanvasObject {
         var p3 = this.pos.fromDelta(this.width/2, 0).rotate(this.center, this.angle)
 
         return [
-            p0.toArray(),
-            p1.toArray(),
-            p2.toArray(),
-            p3.toArray(),
+            p0.toJson(),
+            p1.toJson(),
+            p2.toJson(),
+            p3.toJson(),
         ]
     }
 }

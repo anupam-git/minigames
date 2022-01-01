@@ -55,9 +55,9 @@ export class Ship extends Triangle {
         
         ctx.beginPath()
         ctx.fillStyle = 'white';
-        ctx.moveTo(points[0][0], points[0][1])
+        ctx.moveTo(points[0].x, points[0].y)
         for (var i in points) {
-            ctx.lineTo(points[i][0], points[i][1])
+            ctx.lineTo(points[i].x, points[i].y)
         }
         ctx.fill()
     }

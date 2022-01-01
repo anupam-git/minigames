@@ -25,6 +25,7 @@
 import { Ship } from "Ship.mjs"
 import { Asteroid } from "./Asteroid.mjs"
 import { Bullet } from "./Bullet.mjs"
+import * as CollisionDetector from "./CollisionDetector.mjs"
 import { Point2D } from "./Point2D.mjs"
 
 var fps = 0
@@ -107,6 +108,17 @@ export function loop(ctx, game, greinerHormann) {
     }
     for (var i in asteroids) {
         asteroids[i].draw(ctx)
+    }
+    /**************/
+
+    /**
+     * Collision Detection
+     */
+    for (var i in asteroids) {
+        if (CollisionDetector.isColliding(greinerHormann, ship, asteroids[i])) {
+            game.pause = true
+            console.log("Asteroid Collided with ship. Game Over !!!")
+        }
     }
     /**************/
 

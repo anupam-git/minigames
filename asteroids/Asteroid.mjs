@@ -49,7 +49,7 @@ export class Asteroid extends Rectangle {
         ctx.fillStyle = 'red';
         
         for (var i in points) {
-            points[i] = new Point2D(points[i][0], points[i][1]).rotate(this.center, this.spriteAngle)
+            points[i] = new Point2D(points[i].x, points[i].y).rotate(this.center, this.spriteAngle)
 
             if (i==0) {
                 ctx.moveTo(points[i].x, points[i].y)
