@@ -22,37 +22,34 @@
  * SOFTWARE.
  */
 
-export class Point2D {
-    constructor(x, y) {
-        this.x = x
-        this.y = y
+import { CanvasObject } from "./CanvasObject.mjs"
+
+export class Bullet extends CanvasObject {
+    constructor(pos, angle) {
+        super(pos, 2, 2, angle)
+
+        this.pos = pos
+        this.angle = angle
+        this.dPos = 4
     }
 
-    rotate(pivot, angle) {
-        var rad = angle * Math.PI/180;
-        var s = Math.sin(rad);
-        var c = Math.cos(rad);
+    draw(ctx) {
+        super.draw(ctx)
+        
+        this.pos.x += Math.cos(this.angle * Math.PI/180) * this.dPos
+        this.pos.y += Math.sin(this.angle * Math.PI/180) * this.dPos
 
-        // translate point back to origin:
-        this.x -= pivot.x;
-        this.y -= pivot.y;
-
-        // rotate point
-        var xnew = this.x * c - this.y * s;
-        var ynew = this.x * s + this.y * c;
-
-        // translate point back:
-        this.x = xnew + pivot.x;
-        this.y = ynew + pivot.y;
-
-        return this
-    }
-
-    fromDelta(dx, dy) {
-        return new Point2D(this.x+dx, this.y+dy)
-    }
-
-    copy() {
-        return new Point2D(this.x, this.y)
+        var p0 = this.pos.fromDelta(0, 0).rotate(this.center, this.angle)
+        var p1 = this.pos.fromDelta(this.width, 0).rotate(this.center, this.angle)
+        var p2 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle)
+        var p3 = this.pos.fromDelta(-this.width, this.height).rotate(this.center, this.angle)
+        
+        ctx.fillStyle = 'white';
+        ctx.beginPath()
+        ctx.moveTo(p0.x, p0.y)
+        ctx.lineTo(p1.x, p1.y)
+        ctx.lineTo(p2.x, p2.y)
+        ctx.lineTo(p3.x, p3.y)
+        ctx.fill()
     }
 }

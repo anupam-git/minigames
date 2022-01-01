@@ -42,8 +42,8 @@ export class Ship extends CanvasObject {
         super.draw(ctx)
 
         this.angle += this.dAngle
-        this.pos.x += Math.cos(this.angle * Math.PI/180) * this.dPos
-        this.pos.y += Math.sin(this.angle * Math.PI/180) * this.dPos
+        this.pos.x += Math.cos((this.angle+90) * Math.PI/180) * this.dPos
+        this.pos.y += Math.sin((this.angle+90) * Math.PI/180) * this.dPos
 
         if (this.angle < 0) {
             this.angle = 360 + this.angle
@@ -51,10 +51,10 @@ export class Ship extends CanvasObject {
             this.angle -= 360
         }
 
-        var p0 = this.pos.fromDelta(this.width/2, 0).rotate(this.center, this.angle-90)
-        var p1 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle-90)
-        var p2 = this.pos.fromDelta(this.width/2, this.height-5).rotate(this.center, this.angle-90)
-        var p3 = this.pos.fromDelta(0, this.height).rotate(this.center, this.angle-90)
+        var p0 = this.pos.fromDelta(this.width/2, 0).rotate(this.center, this.angle)
+        var p1 = this.pos.fromDelta(this.width, this.height).rotate(this.center, this.angle)
+        var p2 = this.pos.fromDelta(this.width/2, this.height-5).rotate(this.center, this.angle)
+        var p3 = this.pos.fromDelta(0, this.height).rotate(this.center, this.angle)
         
         ctx.beginPath()
         ctx.fillStyle = 'white';

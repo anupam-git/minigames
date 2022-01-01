@@ -23,12 +23,14 @@
  */
 
 import { Ship } from "Ship.mjs"
+import { Bullet } from "./Bullet.mjs"
 import { Point2D } from "./Point2D.mjs"
 
 var fps = 0
 var fpsStartTime = new Date().getTime()
 
 var ship = null
+var bullets = []
 
 export function handleKeyPressed(event) {
     switch (event.key) {
@@ -43,6 +45,9 @@ export function handleKeyPressed(event) {
             break;
         case Qt.Key_Down:
             ship.startMoveDown()
+            break;
+        case Qt.Key_Space:
+            bullets.push(new Bullet(new Point2D(ship.center.x, ship.pos.y).rotate(ship.center, ship.angle), ship.angle-90))
             break;
     }
 }
@@ -69,7 +74,7 @@ export function loop(ctx, game) {
      * Initialization
      */
     if (!ship) {
-        ship = new Ship(new Point2D(ctx.canvas.width/2, ctx.canvas.height/2), 90)
+        ship = new Ship(new Point2D(ctx.canvas.width/2, ctx.canvas.height/2), 0)
         ship.pos.x -= ship.width/2
         ship.pos.y -= ship.height/2
     }
@@ -88,4 +93,7 @@ export function loop(ctx, game) {
     /**************/
 
     ship.draw(ctx)
+    for (var i in bullets) {
+        bullets[i].draw(ctx)
+    }
 }
