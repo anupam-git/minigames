@@ -27,7 +27,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtMultimedia 5.15
 
-import "asteroids.mjs" as Asteroids
+import "game.mjs" as Game
 
 Item {
     id: root
@@ -38,10 +38,10 @@ Item {
     focus: true
 
     Keys.onPressed: {
-        Asteroids.handleKeyPressed(event, game)
+        Game.handleKeyPressed(event, game)
     }
     Keys.onReleased: {
-        Asteroids.handleKeyReleased(event, game)
+        Game.handleKeyReleased(event, game)
     }
     
     QtObject {
@@ -57,7 +57,7 @@ Item {
         }
 
         function reset() {
-            Asteroids.reset()
+            Game.reset()
             
             game.score = 0
             game.fps = 0

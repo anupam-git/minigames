@@ -26,7 +26,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-import "asteroids.mjs" as Asteroids
+import "game.mjs" as Game
 import "Util.mjs" as Util
 import "greiner-hormann.min.js" as GH
 
@@ -42,7 +42,7 @@ Canvas {
             ctx.fillStyle = Qt.rgba(0, 0, 0, 1);
             ctx.fillRect(0, 0, width, height);
 
-            Asteroids.loop(ctx, game, greinerHormann)
+            Game.loop(ctx, game, greinerHormann)
 
             if (!game.pause) {
                 requestAnimationFrame(draw);
@@ -89,7 +89,7 @@ Canvas {
                     break;
             }
 
-            Asteroids.generateAsteroid(
+            Game.generateAsteroid(
                 x,
                 y,
                 Util.getRandomIntInclusive(2, 3),
@@ -99,5 +99,9 @@ Canvas {
             interval = Util.getRandomIntInclusive(1000, 1500)
             start()
         }
+    }
+
+    Component.onCompleted: {
+        loadImage("asteroid.png")
     }
 }

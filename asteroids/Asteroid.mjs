@@ -43,20 +43,10 @@ export class Asteroid extends Rectangle {
         this.pos.y += Math.sin(this.angle * Math.PI/180) * this.speed
         this.spriteAngle += this.spriteRotationSpeed
 
-        var points = this.getPoints()
-
-        ctx.beginPath()
-        ctx.fillStyle = 'red';
-        
-        for (var i in points) {
-            points[i] = new Point2D(points[i].x, points[i].y).rotate(this.center, this.spriteAngle)
-
-            if (i==0) {
-                ctx.moveTo(points[i].x, points[i].y)
-            }
-            ctx.lineTo(points[i].x, points[i].y)
-        }
-        ctx.fill()
+        ctx.setTransform(1, 0, 0, 1, this.center.x, this.center.y);
+        ctx.rotate(this.spriteAngle*Math.PI/180);
+        ctx.drawImage("asteroid.png", -this.width/2, -this.height/2, this.width, this.height);
+        ctx.setTransform(1,0,0,1,0,0);
 
         this.isOutOfView = !(
             this.pos.x >= -this.width-200 &&
