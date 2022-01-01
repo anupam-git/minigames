@@ -106,7 +106,6 @@ export function loop(ctx, game) {
      */
     for (var i in bullets) {
         if (bullets[i].isOutOfView) {
-            console.log(`Bullet [${i}] is out of view. Deleting`)
             bullets.splice(i, 1)
         }
     }
