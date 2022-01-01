@@ -27,15 +27,15 @@ import { Ship } from "Ship.mjs"
 var fps = 0
 var fpsStartTime = new Date().getTime()
 
-var ship = new Ship(50, 50, 80)
+var ship = null
 
 export function handleKeyPressed(event) {
     switch (event.key) {
         case Qt.Key_Left:
-            ship.startMoveLeft()
+            ship.startRotateLeft()
             break;
         case Qt.Key_Right:
-            ship.startMoveRight()
+            ship.startRotateRight()
             break;
         case Qt.Key_Up:
             ship.startMoveUp()
@@ -49,10 +49,10 @@ export function handleKeyPressed(event) {
 export function handleKeyReleased(event) {
     switch (event.key) {
         case Qt.Key_Left:
-            ship.stopMoveLeft()
+            ship.stopRotateLeft()
             break;
         case Qt.Key_Right:
-            ship.stopMoveRight()
+            ship.stopRotateRight()
             break;
         case Qt.Key_Up:
             ship.stopMoveUp()
@@ -64,6 +64,16 @@ export function handleKeyReleased(event) {
 }
 
 export function loop(ctx, game) {
+    /**
+     * Initialization
+     */
+    if (!ship) {
+        ship = new Ship(ctx.canvas.width/2, ctx.canvas.height/2, 0)
+        ship.x -= ship.width/2
+        ship.y -= ship.height/2
+    }
+    /**************/
+
     /**
      * FPS Calculation
      */

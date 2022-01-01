@@ -16,7 +16,7 @@ export class CanvasObject {
     }
     set x(x) {
         this._x = x
-        this.center.x = this.x+this.width/2
+        this.center.x = x+this.width/2
     }
 
     get y() {
@@ -24,7 +24,7 @@ export class CanvasObject {
     }
     set y(y) {
         this._y = y
-        this.center.y = this.y+this.height/2
+        this.center.y = y+this.height/2
     }
 
     get width() {

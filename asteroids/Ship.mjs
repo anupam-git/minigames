@@ -1,4 +1,5 @@
 import { CanvasObject } from "CanvasObject.mjs"
+import { Point2D } from "./Point2D.mjs"
 
 export class Ship extends CanvasObject {
     constructor(x, y, angle) {
@@ -17,16 +18,33 @@ export class Ship extends CanvasObject {
     draw(ctx) {
         super.draw(ctx)
 
-        this.x += this.dx
+        this.angle += this.dx
         this.y += this.dy
 
+        var p0 = new Point2D(this.x+this.width/2, this.y).rotate(this.center.x, this.center.y, this.angle)
+        var p1 = new Point2D(this.x+this.width, this.y+this.height).rotate(this.center.x, this.center.y, this.angle)
+        var p2 = new Point2D(this.x+this.width/2, this.y+this.height-5).rotate(this.center.x, this.center.y, this.angle)
+        var p3 = new Point2D(this.x, this.y+this.height).rotate(this.center.x, this.center.y, this.angle)
+        
         ctx.beginPath()
         ctx.fillStyle = 'white';
-        ctx.moveTo(this.x, this.y)
-        ctx.lineTo(this.x+this.width/2, this.y+this.height)
-        ctx.lineTo(this.x, this.y+this.height-5)
-        ctx.lineTo(this.x-this.width/2, this.y+this.height)
+        ctx.moveTo(p0.x, p0.y)
+        ctx.lineTo(p1.x, p1.y)
+        ctx.lineTo(p2.x, p2.y)
+        ctx.lineTo(p3.x, p3.y)
         ctx.fill()
+
+        // Debug points
+        /*
+        ctx.fillStyle = "red"
+        ctx.fillRect(p0.x-3, p0.y-3, 6, 6)
+        ctx.fillRect(p1.x-3, p1.y-3, 6, 6)
+        ctx.fillRect(p2.x-3, p2.y-3, 6, 6)
+        ctx.fillRect(p3.x-3, p3.y-3, 6, 6)
+        ctx.fillStyle = "blue"
+        ctx.fillRect(this.center.x-3, this.center.y-3, 6, 6)
+        */
+        //////
     }
 
     startMoveUp() {
@@ -35,10 +53,11 @@ export class Ship extends CanvasObject {
     startMoveDown() {
         this.dy = this.maxDy
     }
-    startMoveLeft() {
+
+    startRotateLeft() {
         this.dx = -this.maxDx
     }
-    startMoveRight() {
+    startRotateRight() {
         this.dx = this.maxDx
     }
 
@@ -48,10 +67,11 @@ export class Ship extends CanvasObject {
     stopMoveDown() {
         this.dy = 0
     }
-    stopMoveLeft() {
+
+    stopRotateLeft() {
         this.dx = 0
     }
-    stopMoveRight() {
+    stopRotateRight() {
         this.dx = 0
     }
 }
