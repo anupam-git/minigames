@@ -120,6 +120,16 @@ export function loop(ctx, game, greinerHormann) {
             console.log("Asteroid Collided with ship. Game Over !!!")
         }
     }
+
+    for (var i in bullets) {
+        for (var j in asteroids) {
+            if (CollisionDetector.isColliding(greinerHormann, bullets[i], asteroids[j])) {
+                bullets.splice(i, 1)
+                asteroids.splice(j, 1)
+                game.score += 10
+            }
+        }
+    }
     /**************/
 
     /**
