@@ -28,8 +28,6 @@ export class Bullet extends CanvasObject {
     constructor(pos, angle) {
         super(pos, 2, 2, angle)
 
-        this.pos = pos
-        this.angle = angle
         this.dPos = 4
         this.isOutOfView = false
     }
