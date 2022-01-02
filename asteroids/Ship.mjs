@@ -22,15 +22,16 @@
  * SOFTWARE.
  */
 
+import { Rectangle } from "./Rectangle.mjs"
 import { Triangle } from "./Triangle.mjs"
 
-export class Ship extends Triangle {
+export class Ship extends Rectangle {
     constructor(pos, angle) {
         if (pos == null || angle == null) {
             throw "Parameters cannot be undefined"
         }
 
-        super(pos, 20, 30, angle)
+        super(pos, 30, 45, angle)
 
         this.maxDAngle = 4
         this.maxDPos = 4
@@ -51,15 +52,19 @@ export class Ship extends Triangle {
             this.angle -= 360
         }
 
-        var points = this.getPoints()
-        
-        ctx.beginPath()
-        ctx.fillStyle = 'white';
-        ctx.moveTo(points[0].x, points[0].y)
-        for (var i in points) {
-            ctx.lineTo(points[i].x, points[i].y)
-        }
-        ctx.fill()
+        // Image drawing with rotation reference : https://stackoverflow.com/a/43155027
+        ctx.setTransform(1, 0, 0, 1, this.center.x, this.center.y);
+        ctx.rotate(this.angle*Math.PI/180);
+        ctx.shadowOffsetX = 6
+        ctx.shadowOffsetY = 6
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 6;
+        ctx.drawImage("assets/sprites/spaceship.png", -this.width/2, -this.height/2, this.width, this.height);
+        ctx.shadowOffsetX = 0
+        ctx.shadowOffsetY = 0
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
+        ctx.setTransform(1,0,0,1,0,0);
     }
 
     startMoveUp() {
