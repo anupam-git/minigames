@@ -132,26 +132,37 @@ Item {
         modal: true
         anchors.centerIn: parent
         closePolicy: Popup.NoAutoClose
+        background: BorderImage {
+            border {
+                left: 20
+                top: 20
+                right: 20
+                bottom: 20
+            }
+            horizontalTileMode: BorderImage.Repeat
+            verticalTileMode: BorderImage.Repeat
+            source: "assets/sprites/dialog.png"
+        }
         footer: Item {
-            height: 30
-            RowLayout {
-                height: parent.height
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.rightMargin: 8
-                anchors.bottomMargin: 8
+            height: 50
 
-                RoundButton {
+            RowLayout {
+                width: parent.width - 40
+                height: parent.height - 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                
+                MenuButton {
+                    Layout.fillWidth: true
                     Layout.preferredHeight: parent.height
-                    radius: 4
                     text: qsTr("Quit")
                     onClicked: {
                         Qt.exit(0)
                     }
                 }
-                RoundButton {
+                MenuButton {
+                    Layout.fillWidth: true
                     Layout.preferredHeight: parent.height
-                    radius: 4
                     text: qsTr("New Game")
                     onClicked: {
                         game.reset()
@@ -167,12 +178,14 @@ Item {
 
                 Label {
                     Layout.alignment: Qt.AlignCenter
-                    text: qsTr("Collision !")
+                    text: qsTr("Boom !!!")
+                    font.family: atariClassicFont.name
                     font.pointSize: 16
                 }
                 Label {
                     Layout.alignment: Qt.AlignCenter
-                    text: qsTr("Your Score : %1").arg(game.score)
+                    font.family: atariClassicFont.name
+                    text: qsTr("Score : %1").arg(game.score)
                 }
             }
         }
