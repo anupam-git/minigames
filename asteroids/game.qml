@@ -38,10 +38,6 @@ Canvas {
         var ctx = getContext("2d");
 
         function draw() {
-            ctx.clearRect(0,0, canvas.width, canvas.height);
-            ctx.fillStyle = Qt.rgba(0, 0, 0, 1);
-            ctx.fillRect(0, 0, width, height);
-
             Game.loop(ctx, game, greinerHormann)
 
             if (!game.pause) {
@@ -102,6 +98,10 @@ Canvas {
     }
 
     Component.onCompleted: {
-        loadImage("asteroid.png")
+        loadImage("assets/sprites/asteroid.png")
+        loadImage("assets/bg/bg0.png")
+        loadImage("assets/bg/bg1.png")
+        loadImage("assets/bg/bg2.png")
+        loadImage("assets/bg/bg3.png")
     }
 }

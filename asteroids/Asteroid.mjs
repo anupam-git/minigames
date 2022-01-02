@@ -43,9 +43,10 @@ export class Asteroid extends Rectangle {
         this.pos.y += Math.sin(this.angle * Math.PI/180) * this.speed
         this.spriteAngle += this.spriteRotationSpeed
 
+        // Image drawing with rotation reference : https://stackoverflow.com/a/43155027
         ctx.setTransform(1, 0, 0, 1, this.center.x, this.center.y);
         ctx.rotate(this.spriteAngle*Math.PI/180);
-        ctx.drawImage("asteroid.png", -this.width/2, -this.height/2, this.width, this.height);
+        ctx.drawImage("assets/sprites/asteroid.png", -this.width/2, -this.height/2, this.width, this.height);
         ctx.setTransform(1,0,0,1,0,0);
 
         this.isOutOfView = !(

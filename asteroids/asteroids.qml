@@ -77,13 +77,13 @@ Item {
 
     SoundEffect {
         id: bulletSound
-        source: Qt.resolvedUrl("./bullet.wav")
+        source: Qt.resolvedUrl("assets/sounds/bullet.wav")
         volume: 0.5
     }
 
     SoundEffect {
         id: explosionSound
-        source: Qt.resolvedUrl("./explosion.wav")
+        source: Qt.resolvedUrl("assets/sounds/explosion.wav")
         volume: 0.5
     }
     

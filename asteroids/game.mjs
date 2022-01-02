@@ -34,19 +34,27 @@ var fpsStartTime = new Date().getTime()
 var ship = null
 var bullets = []
 var asteroids = []
+var bgOffsetX = 0
+var bgOffsetY = 0
+var bgOffsetDx = 0
+var bgOffsetDy = 0
 
 export function handleKeyPressed(event, game) {
     switch (event.key) {
         case Qt.Key_Left:
+            bgOffsetDx = 1
             ship.startRotateLeft()
             break;
         case Qt.Key_Right:
+            bgOffsetDx = -1
             ship.startRotateRight()
             break;
         case Qt.Key_Up:
+            bgOffsetDy = 1
             ship.startMoveUp()
             break;
         case Qt.Key_Down:
+            bgOffsetDy = -1
             ship.startMoveDown()
             break;
         case Qt.Key_Space:
@@ -98,6 +106,31 @@ export function loop(ctx, game, greinerHormann) {
     }
 
     fps += 1
+    /**************/
+
+    /**
+     * Draw background
+     */
+    function drawBg(bg, speed) {
+        ctx.fillStyle = bg
+        ctx.setTransform(1, 0, 0, 1, bgOffsetX*speed, bgOffsetY*speed)
+        ctx.fillRect(-bgOffsetX*speed, -bgOffsetY*speed, ctx.canvas.width, ctx.canvas.height)
+        ctx.setTransform(1, 0, 0, 1, 0, 0)
+    }
+    
+    var bg0 = ctx.createPattern("assets/bg/bg0.png", "repeat")
+    var bg1 = ctx.createPattern("assets/bg/bg1.png", "repeat")
+    var bg2 = ctx.createPattern("assets/bg/bg2.png", "repeat")
+    var bg3 = ctx.createPattern("assets/bg/bg3.png", "repeat")
+
+    bgOffsetX += bgOffsetDx
+    bgOffsetY += bgOffsetDy
+
+    ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height)
+    drawBg(bg0, 0.1)
+    drawBg(bg1, 0.3)
+    drawBg(bg2, 0.4)
+    drawBg(bg3, 0.6)
     /**************/
 
     /**
