@@ -196,9 +196,14 @@ export function loop(ctx, game, greinerHormann) {
         for (var j in asteroids) {
             if (CollisionDetector.isColliding(greinerHormann, bullets[i], asteroids[j])) {
                 bullets.splice(i, 1)
-                asteroids.splice(j, 1)
+                var removed = asteroids.splice(j, 1)[0]
                 game.playExplosionSound()
-                game.score += 10
+                game.score += removed.scoreValue
+
+                if (!removed.small) {
+                    asteroids.push(new Asteroid(new Point2D(removed.pos.x, removed.pos.y), removed.speed, removed.angle-15, true))
+                    asteroids.push(new Asteroid(new Point2D(removed.pos.x, removed.pos.y), removed.speed, removed.angle+15, true))
+                }
             }
         }
     }

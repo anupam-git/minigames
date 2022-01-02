@@ -27,13 +27,15 @@ import { getRandomIntInclusive } from "./Util.mjs"
 import { Point2D } from "./Point2D.mjs"
 
 export class Asteroid extends Rectangle {
-    constructor(pos, speed, angle) {
-        super(pos, 50, 50, angle)
+    constructor(pos, speed, angle, small=false) {
+        super(pos, small ? 25 : 50, small ? 25 : 50, angle)
 
+        this.scoreValue = small ? 15 : 10
         this.speed = speed
         this.isOutOfView = false
         this.spriteAngle = 0
         this.spriteRotationSpeed = 1+(1/getRandomIntInclusive(1, 10))
+        this.small = small
     }
 
     draw(ctx) {
@@ -56,5 +58,9 @@ export class Asteroid extends Rectangle {
             this.pos.y >= -this.height-200 &&
             this.pos.y <= ctx.canvas.height+this.height+200
         )
+    }
+
+    toString() {
+        return `Asteroid(pos: ${this.pos}, angle: ${this.angle}, width: ${this.width}, height: ${this.height})`
     }
 }

@@ -63,4 +63,8 @@ export class Point2D {
     toJson() {
         return { x: this.x, y: this.y }
     }
+
+    toString() {
+        return `(${parseInt(this.x)}, ${parseInt(this.y)})`
+    }
 }

@@ -23,40 +23,33 @@ SOFTWARE.
 */
 
 import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick.Particles 2.15
 
-import "game.mjs" as Game
-import "Util.mjs" as Util
-import "greiner-hormann.min.js" as GH
+Item {
+    id: root
+    width: 100
+    height: 100
 
-Canvas {
-    id: canvas
-    anchors.fill: parent
-
-    onPaint: {
-        var ctx = getContext("2d");
-
-        function draw() {
-            Game.loop(ctx, game, greinerHormann)
-
-            if (!game.pause) {
-                requestAnimationFrame(draw);
-            }
-        }
-
-        draw();
+    ParticleSystem {
+        id: particleSystem
     }
 
-    Component.onCompleted: {
-        loadImage("assets/sprites/asteroid.png")
-        loadImage("assets/bg/bg0.png")
-        loadImage("assets/bg/bg1.png")
-        loadImage("assets/bg/bg2.png")
-        loadImage("assets/bg/bg3.png")
+    Emitter {
+        id: emitter
+        anchors.centerIn: parent
+        width: 30
+        height: 30
+        system: particleSystem
+        emitRate: 10
+        lifeSpan: 1000
+        lifeSpanVariation: 500
+        size: 4
+        endSize: 4
+        // Tracer { color: 'green' }
     }
 
-    // Explosion {
-    //     anchors.centerIn: parent
-    // }
+    ImageParticle {
+        source: "assets/sprites/particle.png"
+        system: particleSystem
+    }
 }
