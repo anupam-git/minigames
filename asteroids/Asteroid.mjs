@@ -34,7 +34,7 @@ export class Asteroid extends Rectangle {
         this.speed = speed
         this.isOutOfView = false
         this.spriteAngle = 0
-        this.spriteRotationSpeed = 1+(1/getRandomIntInclusive(1, 10))
+        this.spriteRotationSpeed = getRandomIntInclusive(-1, 1)+(1/getRandomIntInclusive(1, 10))
         this.small = small
     }
 
