@@ -12,3 +12,4 @@ A qml implemetation of classic Asteroids game
 ## Attributions
   - All sound assets are acquired from https://freesound.org licensed under [Creative Commons 3.0](https://creativecommons.org/licenses/by-nc/3.0/legalcode)
   - All image assets are acquired from https://opengameart.org/
+  - All font assets are acquired from https://www.fontspace.com/

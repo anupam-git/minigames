@@ -30,16 +30,54 @@ Item {
     id: root
 
     ColumnLayout {
-        width: parent.width*0.4
-        height: parent.height*0.4
         anchors.centerIn: parent
+        spacing: 16
 
-        RoundButton {
+        Item {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredHeight: label.font.pointSize
+            Layout.bottomMargin: label.font.pointSize
+            
+            Label {
+                id: label
+                anchors.centerIn: parent
+                text: qsTr("Asteroids")
+                font.family: atariClassicFont.name
+                font.pointSize: 40
+                color: "white"
+            }
+        }
+
+        MenuButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
             text: qsTr("New Game")
-            radius: 4
-            Layout.alignment: Qt.AlignCenter
             onClicked: {
                 contentLoader.source = Qt.resolvedUrl("./game.qml")
+                music.volume = 0.2
+            }
+        }
+
+        MenuButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            text: qsTr("Game Mode : %1").arg(game.gameModeStr(game.gameMode))
+            onClicked: {
+                game.gameMode = game.gameMode == 2 ? 0 : game.gameMode+1
+            }
+        }
+
+        MenuButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 60
+            text: qsTr("Music : %1").arg(game.musicMuted ? "Off" : "On")
+            onClicked: {
+                if (game.musicMuted) {
+                    game.musicMuted = false
+                    music.play()
+                } else {
+                    game.musicMuted = true
+                }
             }
         }
     }

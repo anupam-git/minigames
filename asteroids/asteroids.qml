@@ -50,9 +50,23 @@ Item {
         property int score: 0
         property int fps: 0
         property bool pause: false
+        property int gameMode: 0
+        property bool musicMuted: false
+
+        function gameModeStr() {
+            switch(game.gameMode) {
+                case 0:
+                    return "Easy"
+                case 1:
+                    return "Medium"
+                case 2:
+                    return "Hard"
+            }
+        }
 
         function gameOver() {
             game.pause = true
+            gameoverSound.play()
             completedDialog.open()
         }
 
@@ -64,6 +78,7 @@ Item {
             game.pause = false
 
             contentLoader.source = Qt.resolvedUrl("./menu.qml")
+            music.volume = 0.4
         }
 
         function playBulletSound() {
@@ -75,6 +90,11 @@ Item {
         }
     }
 
+    FontLoader {
+        id: atariClassicFont
+        source: "assets/fonts/AtariClassic.ttf"
+    }
+
     SoundEffect {
         id: bulletSound
         source: Qt.resolvedUrl("assets/sounds/bullet.wav")
@@ -84,7 +104,24 @@ Item {
     SoundEffect {
         id: explosionSound
         source: Qt.resolvedUrl("assets/sounds/explosion.wav")
+        volume: 0.8
+    }
+
+    SoundEffect {
+        id: gameoverSound
+        source: Qt.resolvedUrl("assets/sounds/gameover.wav")
         volume: 0.5
+    }
+
+    SoundEffect {
+        id: music
+        source: Qt.resolvedUrl("assets/sounds/music.wav")
+        volume: 0.4
+        loops: SoundEffect.Infinite
+        muted: game.musicMuted
+        Component.onCompleted: {
+            play()
+        }
     }
     
     Dialog {
@@ -197,7 +234,7 @@ Item {
                 Loader {
                     id: contentLoader
                     anchors.fill: parent
-                    source: Qt.resolvedUrl("./game.qml")
+                    source: Qt.resolvedUrl("./menu.qml")
                 }
             }
         }
