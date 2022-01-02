@@ -27,6 +27,7 @@ import { Asteroid } from "./Asteroid.mjs"
 import { Bullet } from "./Bullet.mjs"
 import * as CollisionDetector from "./CollisionDetector.mjs"
 import { Point2D } from "./Point2D.mjs"
+import { getRandomIntInclusive } from "./Util.mjs"
 
 var fps = 0
 var fpsStartTime = new Date().getTime()
@@ -81,8 +82,43 @@ export function handleKeyReleased(event, game) {
     }
 }
 
-export function generateAsteroid(x, y, speed, angle) {
-    asteroids.push(new Asteroid(new Point2D(x, y), speed, angle))
+export function generateAsteroids(ctx, game) {
+    if (asteroids.length < (game.minimumAsteroids + game.minimumAsteroids*game.gameMode)) {
+        var edge = getRandomIntInclusive(0, 3)
+        var x = 0
+        var y = 0
+        var speed = getRandomIntInclusive(2, 3)
+        var angle = 0
+
+        switch (edge) {
+            case 0:
+                // Generate at left edge
+                x = -100
+                y = getRandomIntInclusive(0, ctx.canvas.height)
+                angle = getRandomIntInclusive(-80, 80)
+                break;
+            case 1:
+                // Generate at top edge
+                x = getRandomIntInclusive(ctx.canvas.width, 0)
+                y = -100
+                angle = getRandomIntInclusive(10, 170)
+                break;
+            case 2:
+                // Generate at right edge
+                x = ctx.canvas.width
+                y = getRandomIntInclusive(0, ctx.canvas.height)
+                angle = getRandomIntInclusive(100, 260)
+                break;
+            case 3:
+                // Generate at bottom edge
+                x = getRandomIntInclusive(ctx.canvas.width, 0)
+                y = ctx.canvas.height
+                angle = getRandomIntInclusive(190, 350)
+                break;
+        }
+
+        asteroids.push(new Asteroid(new Point2D(x, y), speed, angle))
+    }
 }
 
 export function loop(ctx, game, greinerHormann) {
@@ -136,6 +172,7 @@ export function loop(ctx, game, greinerHormann) {
     /**
      * Draw all objects
      */
+    generateAsteroids(ctx, game)
     ship.draw(ctx)
     for (var i in bullets) {
         bullets[i].draw(ctx)

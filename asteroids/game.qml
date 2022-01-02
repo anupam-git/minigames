@@ -48,55 +48,6 @@ Canvas {
         draw();
     }
 
-    Timer {
-        repeat: false
-        interval: 1000
-        running: true
-        onTriggered: {
-            var edge = Util.getRandomIntInclusive(0, 3)
-            var x = 0
-            var y = 0
-            var angle = 0
-
-            switch (edge) {
-                case 0:
-                    // Generate at left edge
-                    x = -100
-                    y = Util.getRandomIntInclusive(0, canvas.height)
-                    angle = Util.getRandomIntInclusive(-80, 80)
-                    break;
-                case 1:
-                    // Generate at top edge
-                    x = Util.getRandomIntInclusive(canvas.width, 0)
-                    y = -100
-                    angle = Util.getRandomIntInclusive(10, 170)
-                    break;
-                case 2:
-                    // Generate at right edge
-                    x = canvas.width
-                    y = Util.getRandomIntInclusive(0, canvas.height)
-                    angle = Util.getRandomIntInclusive(100, 260)
-                    break;
-                case 3:
-                    // Generate at bottom edge
-                    x = Util.getRandomIntInclusive(canvas.width, 0)
-                    y = canvas.height
-                    angle = Util.getRandomIntInclusive(190, 350)
-                    break;
-            }
-
-            Game.generateAsteroid(
-                x,
-                y,
-                Util.getRandomIntInclusive(2, 3),
-                angle
-            )
-
-            interval = Util.getRandomIntInclusive(1000, 1500)
-            start()
-        }
-    }
-
     Component.onCompleted: {
         loadImage("assets/sprites/asteroid.png")
         loadImage("assets/bg/bg0.png")
