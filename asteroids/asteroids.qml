@@ -52,7 +52,7 @@ Item {
         property bool pause: false
         property int gameMode: 0
         property int minimumAsteroids: 5
-        property bool musicMuted: true
+        property bool musicMuted: false
 
         function gameModeStr() {
             switch(game.gameMode) {
