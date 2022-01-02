@@ -89,6 +89,10 @@ Item {
         function playExplosionSound() {
             explosionSound.play()
         }
+
+        function generateExplosionParticles(pos, angle, speed) {
+            contentLoader.item.generateExplosionParticles(pos, angle, speed)
+        }
     }
 
     FontLoader {

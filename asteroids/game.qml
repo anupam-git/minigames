@@ -56,7 +56,18 @@ Canvas {
         loadImage("assets/bg/bg3.png")
     }
 
-    // Explosion {
-    //     anchors.centerIn: parent
-    // }
+    function generateExplosionParticles(pos, _angle, _speed) {
+        var component = Qt.createComponent("Explosion.qml");
+        var obj = component.createObject(canvas, {
+            x: pos.x,
+            y: pos.y,
+            angle: _angle,
+            speed: _speed
+        });
+
+        if (obj == null) {
+            // Error Handling
+            console.log("Error creating explosion");
+        }
+    }
 }

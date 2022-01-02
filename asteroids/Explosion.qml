@@ -27,7 +27,11 @@ import QtQuick.Particles 2.15
 
 Item {
     id: root
-    width: 100
+
+    property int angle
+    property int speed
+
+    width: 50
     height: 100
 
     ParticleSystem {
@@ -36,20 +40,32 @@ Item {
 
     Emitter {
         id: emitter
-        anchors.centerIn: parent
-        width: 30
-        height: 30
+        anchors.fill: parent
         system: particleSystem
-        emitRate: 10
-        lifeSpan: 1000
-        lifeSpanVariation: 500
         size: 4
-        endSize: 4
-        // Tracer { color: 'green' }
     }
 
     ImageParticle {
         source: "assets/sprites/particle.png"
         system: particleSystem
     }
+
+    Timer {
+        interval: 500
+        repeat: false
+        running: true
+        onTriggered: root.destroy()
+    }
+
+    Timer {
+        interval: 1
+        repeat: true
+        running: true
+        onTriggered: {
+            root.x += root.speed*Math.cos(root.angle*Math.PI/180)
+            root.y += root.speed*Math.sin(root.angle*Math.PI/180)
+        }
+    }
+
+    Component.onCompleted: emitter.burst(1)
 }

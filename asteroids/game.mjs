@@ -197,6 +197,7 @@ export function loop(ctx, game, greinerHormann) {
             if (CollisionDetector.isColliding(greinerHormann, bullets[i], asteroids[j])) {
                 bullets.splice(i, 1)
                 var removed = asteroids.splice(j, 1)[0]
+                game.generateExplosionParticles(removed.pos, removed.angle, removed.speed)
                 game.playExplosionSound()
                 game.score += removed.scoreValue
 
